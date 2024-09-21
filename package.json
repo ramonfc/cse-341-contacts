@@ -1,0 +1,19 @@
+{
+  "name": "contacts-pjt",
+  "version": "1.0.0",
+  "description": "Contacts project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramonfc/cse-341-contacts.git"
+  },
+  "author": "Ramon Castano",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramonfc/cse-341-contacts/issues"
+  },
+  "homepage": "https://github.com/ramonfc/cse-341-contacts#readme"
+}
