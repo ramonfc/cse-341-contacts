@@ -1,5 +1,15 @@
+# Deployed:
 ### Get all users
 GET https://cse-341-contacts-eeak.onrender.com/users
 
 ### Get Single user
 GET https://cse-341-contacts-eeak.onrender.com/users/66ef3e880201e3b5dd1459e9
+
+
+
+# Localhost:
+### Get all users
+GET http://localhost:3000/users
+
+### Get Single user
+GET http://localhost:3000/users/66ef3e880201e3b5dd1459e9
