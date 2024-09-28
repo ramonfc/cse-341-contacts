@@ -39,7 +39,80 @@ const getSingle = async (req, res) => {
     }
 }
 
+const createUser = async (req, res) => {
+    const { firstName, lastName, email, favoriteColor, birthday } = req.body;
+    const user = { firstName, lastName, email, favoriteColor, birthday };
+
+    try {
+        const response = await mongodb.getDatabase().db(dbName).collection("pj1_users").insertOne(user);
+        if (response.acknowledged) {
+            res.status(201).json({_id: response.insertedId});
+        }
+        else {
+            res.status(500).json(response.error || "Some error ocurred while creating the user");
+        }
+    } catch (error) {
+        res.status(500).json(response.error || "Some error ocurred while creating the user");
+
+    }
+}
+
+const updateUser = async (req, res) => {
+    let userId = req.params.id;
+    if (!ObjectId.isValid(userId)) {
+        return res.status(400).json({ error: "Invalid ID format" });
+    }
+    
+    userId = new ObjectId(userId);
+
+    const { firstName, lastName, email, favoriteColor, birthday } = req.body;
+    const user = { firstName, lastName, email, favoriteColor, birthday };
+
+    try {
+        // const response = await mongodb.getDatabase().db(dbName).collection("pj1_users").replaceOne({_id: userId}, user);
+        const response = await mongodb.getDatabase().db(dbName).collection("pj1_users").updateOne({_id: userId}, {$set: user});
+
+        if(response.modifiedCount > 0){
+            res.status(204).send();
+        }
+        else{
+            res.status(500).json(response.error || "Some error ocurred while updating the user");
+        }
+    } catch (error) {
+        res.status(500).json(response.error || "Some error ocurred while updating the user");
+
+    }
+}
+
+const deleteUser = async (req, res) => {
+    let userId = req.params.id;
+    if (!ObjectId.isValid(userId)) {
+        return res.status(400).json({ error: "Invalid ID format" });
+    }
+    
+    userId = new ObjectId(userId);
+
+    const { firstName, lastName, email, favoriteColor, birthday } = req.body;
+    const user = { firstName, lastName, email, favoriteColor, birthday };
+
+    try {
+        const response = await mongodb.getDatabase().db(dbName).collection("pj1_users").deleteOne({_id: userId});
+        if(response.deletedCount > 0){
+            res.status(204).send();
+        }
+        else{
+            res.status(500).json(response.error || "Some error ocurred while deleting the user");
+        }
+    } catch (error) {
+        res.status(500).json(response.error || "Some error ocurred while deleting the user");
+
+    }
+}
+
 module.exports = {
     getAll,
-    getSingle
+    getSingle,
+    createUser,
+    updateUser,
+    deleteUser
 }
