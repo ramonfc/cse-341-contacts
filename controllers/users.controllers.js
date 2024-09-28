@@ -5,6 +5,10 @@ const ObjectId = require("mongodb").ObjectId;
 const dbName = process.env.MONGO_DB_NAME;
 
 const getAll = async (req, res) => {
+    // #swagger.tags=['Users']
+    /**
+     * #swagger.description= "Gets all contacts"
+     */
     const result = await mongodb.getDatabase().db(dbName).collection("pj1_users").find();
     result.toArray().then((users) => {
         res.setHeader("Content-Type", "application/json");
@@ -16,6 +20,10 @@ const getAll = async (req, res) => {
 }
 
 const getSingle = async (req, res) => {
+// #swagger.tags=['Users']
+    /**
+     * #swagger.description= "Gets a single contact given the id"
+     */
     let userId = req.params.id;
     if (!ObjectId.isValid(userId)) {
         return res.status(400).json({ error: "Invalid ID format" });
@@ -40,6 +48,11 @@ const getSingle = async (req, res) => {
 }
 
 const createUser = async (req, res) => {
+// #swagger.tags=['Users']
+    /**
+     * #swagger.description= "Creates a new contact given the required data"
+    */
+ 
     const { firstName, lastName, email, favoriteColor, birthday } = req.body;
     const user = { firstName, lastName, email, favoriteColor, birthday };
 
@@ -58,6 +71,10 @@ const createUser = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
+// #swagger.tags=['Users']
+    /**
+     * #swagger.description= "Updates the user info given the id"
+    */
     let userId = req.params.id;
     if (!ObjectId.isValid(userId)) {
         return res.status(400).json({ error: "Invalid ID format" });
@@ -85,6 +102,10 @@ const updateUser = async (req, res) => {
 }
 
 const deleteUser = async (req, res) => {
+// #swagger.tags=['Users']
+    /**
+     * #swagger.description= "Deletes the user info given the id"
+    */
     let userId = req.params.id;
     if (!ObjectId.isValid(userId)) {
         return res.status(400).json({ error: "Invalid ID format" });
