@@ -52,7 +52,36 @@ const createUser = async (req, res) => {
     /**
      * #swagger.description= "Creates a new contact given the required data"
     */
- 
+
+    /* #swagger.parameters['body'] = {
+       in: 'body', 
+       '@schema': { 
+            "required": ["firstName", "lastName", "email", "favoriteColor", "birthday"], 
+           "properties": { 
+               "firstName": { 
+                   "type": "string", 
+                   "example": "Jhon" 
+               },
+               "lastName": {
+                   "type": "string",
+                   "example": "Doe"
+               },
+               "email": {
+                   "type": "string",
+                   "example": "jhon@email.com"
+               },
+               "favoriteColor": {
+                   "type": "string",
+                   "example": "red"
+               },
+               "birthday": {
+                   "type": "string",
+                   "example": "1988-10-24"
+               } 
+           } 
+       } 
+   } 
+   */ 
     const { firstName, lastName, email, favoriteColor, birthday } = req.body;
     const user = { firstName, lastName, email, favoriteColor, birthday };
 
@@ -75,6 +104,36 @@ const updateUser = async (req, res) => {
     /**
      * #swagger.description= "Updates the user info given the id"
     */
+
+   /**
+   /* #swagger.parameters['body'] = { 
+        in: 'body', 
+        '@schema': { 
+            "properties": { 
+                "firstName": { 
+                    "type": "string", 
+                    "example": "Jhon" 
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Doe"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "jhon@email.com"
+                },
+                "favoriteColor": {
+                    "type": "string",
+                    "example": "red"
+                },
+                "birthday": {
+                    "type": "string",
+                    "example": "1988-10-24"
+                } 
+            } 
+        } 
+    } 
+    */ 
     let userId = req.params.id;
     if (!ObjectId.isValid(userId)) {
         return res.status(400).json({ error: "Invalid ID format" });
@@ -82,8 +141,14 @@ const updateUser = async (req, res) => {
     
     userId = new ObjectId(userId);
 
-    const { firstName, lastName, email, favoriteColor, birthday } = req.body;
-    const user = { firstName, lastName, email, favoriteColor, birthday };
+    // const { firstName, lastName, email, favoriteColor, birthday } = req.body;
+    // const user = { firstName, lastName, email, favoriteColor, birthday };
+    const user = {};
+    if (req.body.firstName) user.firstName = req.body.firstName;
+    if (req.body.lastName) user.lastName = req.body.lastName;
+    if (req.body.email) user.email = req.body.email;
+    if (req.body.favoriteColor) user.favoriteColor = req.body.favoriteColor;
+    if (req.body.birthday) user.birthday = req.body.birthday; 
 
     try {
         // const response = await mongodb.getDatabase().db(dbName).collection("pj1_users").replaceOne({_id: userId}, user);
@@ -112,9 +177,6 @@ const deleteUser = async (req, res) => {
     }
     
     userId = new ObjectId(userId);
-
-    const { firstName, lastName, email, favoriteColor, birthday } = req.body;
-    const user = { firstName, lastName, email, favoriteColor, birthday };
 
     try {
         const response = await mongodb.getDatabase().db(dbName).collection("pj1_users").deleteOne({_id: userId});
